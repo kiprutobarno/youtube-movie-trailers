@@ -1,7 +1,5 @@
 package com.tuts.movies.models;
 
-import java.time.LocalDateTime;
-
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -19,8 +17,10 @@ public class Review {
     @Id
     private ObjectId id;
 
-    private String body;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private String reviewBody;
+
+    public Review(String reviewBody) {
+        this.reviewBody = reviewBody;
+    }
 
 }
