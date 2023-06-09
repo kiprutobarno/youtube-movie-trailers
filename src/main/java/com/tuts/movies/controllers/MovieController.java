@@ -3,7 +3,6 @@ package com.tuts.movies.controllers;
 import java.util.List;
 import java.util.Optional;
 
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +26,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Movie>> getOneMovie(@PathVariable ObjectId id) {
+    public ResponseEntity<Optional<Movie>> getOneMovie(@PathVariable String id) {
         return new ResponseEntity<Optional<Movie>>(service.getOne(id), HttpStatus.OK);
     }
 }

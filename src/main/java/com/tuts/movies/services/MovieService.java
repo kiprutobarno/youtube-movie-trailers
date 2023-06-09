@@ -2,8 +2,6 @@ package com.tuts.movies.services;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +17,7 @@ public class MovieService {
         return repository.findAll();
     }
 
-    public Optional<Movie> getOne(ObjectId id) {
-        return repository.findById(id);
+    public Optional<Movie> getOne(String id) {
+        return repository.findMovieByImdbId(id);
     }
 }
