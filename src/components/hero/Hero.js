@@ -5,7 +5,7 @@ import "./Hero.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Hero = ({ movies }) => {
   const navigate = useNavigate();
@@ -29,12 +29,18 @@ const Hero = ({ movies }) => {
                       <h4>{movie.title}</h4>
                     </div>
                     <div className="movie-buttons-container">
-                      <div className="play-button-icon-container">
-                        <FontAwesomeIcon
-                          className="play-button-icon"
-                          icon={faCirclePlay}
-                        />
-                      </div>
+                      <Link
+                        to={`/trailer/${movie.trailerLink.substring(
+                          movie.trailerLink.length - 11
+                        )}`}
+                      >
+                        <div className="play-button-icon-container">
+                          <FontAwesomeIcon
+                            className="play-button-icon"
+                            icon={faCirclePlay}
+                          />
+                        </div>
+                      </Link>
                       <div className="movie-review-button-container">
                         <Button
                           variant="info"
