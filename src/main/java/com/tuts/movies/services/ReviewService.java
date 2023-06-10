@@ -21,7 +21,8 @@ public class ReviewService {
     public Review create(String reviewBody, String imdbId) {
         Review review = repository.insert(new Review(reviewBody));
         template.update(Movie.class).matching(Criteria.where("imdbId").is(imdbId))
-                .apply(new Update().push("reviewIds").value(review)).first();
+                .apply(new Update().push("reviews").value(review))
+                .first();
 
         return review;
     }
