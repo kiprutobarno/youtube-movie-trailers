@@ -3,12 +3,11 @@ import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import ReviewForm from "../forms/ReviewForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createReview, fetchMovie } from "../../redux/actions";
+import { createReview, fetchMovie, fetchReviews } from "../../redux/actions";
 
 const Reviews = () => {
   const movie = useSelector((state) => state.movie);
-
-  const reviews = movie?.reviews;
+  const reviews = useSelector((state) => state.reviews);
 
   const dispatch = useDispatch();
 
@@ -18,13 +17,15 @@ const Reviews = () => {
 
   useEffect(() => {
     dispatch(fetchMovie(movieId));
-  }, [movieId]);
+    dispatch(fetchReviews(movieId));
+  }, [movieId, reviews]);
 
   const addReview = async (e) => {
     e.preventDefault();
     const review = reviewText.current;
 
     dispatch(createReview(review.value, movieId));
+
     review.value = "";
   };
 

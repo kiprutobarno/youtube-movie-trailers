@@ -3,6 +3,7 @@ import api from "../api/axiosConfig";
 export const FETCH_MOVIES = "FETCH_MOVIES";
 export const FETCH_MOVIE = "FETCH_MOVIE";
 export const ADD_REVIEW = "ADD_REVIEW";
+export const FETCH_REVIEWS = "FETCH_REVIEWS";
 
 export const fetchMovie = (id) => async (disptach) => {
   try {
@@ -30,6 +31,18 @@ export const createReview = (reviewBody, imdbId) => async (dispatch) => {
     dispatch({
       type: ADD_REVIEW,
       payload: { reviewBody, imdbId },
+    });
+  } catch (error) {}
+};
+
+export const fetchReviews = (id) => async (disptach) => {
+  try {
+    const {
+      data: { reviews },
+    } = await api.get(`/api/v1/movies/${id}`);
+    disptach({
+      type: FETCH_REVIEWS,
+      payload: reviews,
     });
   } catch (error) {}
 };
