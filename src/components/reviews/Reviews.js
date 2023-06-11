@@ -1,33 +1,31 @@
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
-import api from "../../api/axiosConfig";
 import { Col, Container, Row } from "react-bootstrap";
 import ReviewForm from "../forms/ReviewForm";
+import { useDispatch, useSelector } from "react-redux";
+import { createReview, fetchMovie } from "../../redux/actions";
 
-const Reviews = ({ getMovie, movie, reviews, setReviews }) => {
+const Reviews = () => {
+  const movie = useSelector((state) => state.movie);
+
+  const reviews = movie?.reviews;
+
+  const dispatch = useDispatch();
+
   const reviewText = useRef();
   let params = useParams();
   const movieId = params.id;
 
   useEffect(() => {
-    getMovie(movieId);
-  }, []);
+    dispatch(fetchMovie(movieId));
+  }, [movieId]);
 
   const addReview = async (e) => {
     e.preventDefault();
     const review = reviewText.current;
-    try {
-      await api.post("/api/v1/reviews", {
-        reviewBody: review.value,
-        imdbId: movieId,
-      });
 
-      const updatedReviews = [...reviews, { reviewBody: review.value }];
-      review.value = "";
-      setReviews(updatedReviews);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(createReview(review.value, movieId));
+    review.value = "";
   };
 
   return (
