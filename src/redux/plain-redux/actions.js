@@ -1,4 +1,4 @@
-import api from "../api/axiosConfig";
+import api from "../../api/axiosConfig";
 
 export const FETCH_MOVIES = "FETCH_MOVIES";
 export const FETCH_MOVIE = "FETCH_MOVIE";
@@ -26,6 +26,7 @@ export const fetchMovies = () => async (dispatch) => {
 };
 
 export const createReview = (reviewBody, imdbId) => async (dispatch) => {
+  console.log(reviewBody);
   try {
     await api.post("/api/v1/reviews", { reviewBody, imdbId });
     dispatch({

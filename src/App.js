@@ -6,10 +6,12 @@ import Home from "./components/home/Home";
 import Reviews from "./components/reviews/Reviews";
 import Trailer from "./components/trailer/Trailer";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMovies } from "./redux/actions";
+
+import { fetchMovies } from "./redux/redux-toolkit/asyncThunks";
 
 const App = () => {
-  const movies = useSelector((state) => state.movies);
+  const { movies } = useSelector((state) => state.movies);
+
   const disptach = useDispatch();
 
   useEffect(() => {

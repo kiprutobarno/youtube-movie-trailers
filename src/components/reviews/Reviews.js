@@ -3,28 +3,34 @@ import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import ReviewForm from "../forms/ReviewForm";
 import { useDispatch, useSelector } from "react-redux";
-import { createReview, fetchMovie, fetchReviews } from "../../redux/actions";
+
+import {
+  fetchMovie,
+  fetchReviews,
+  createReview,
+} from "../../redux/redux-toolkit/asyncThunks";
 
 const Reviews = () => {
-  const movie = useSelector((state) => state.movie);
-  const reviews = useSelector((state) => state.reviews);
+  const { movie } = useSelector((state) => state.movie);
+  const { reviews } = useSelector((state) => state.reviews);
 
   const dispatch = useDispatch();
 
   const reviewText = useRef();
+
   let params = useParams();
-  const movieId = params.id;
+  const imdbId = params.id;
 
   useEffect(() => {
-    dispatch(fetchMovie(movieId));
-    dispatch(fetchReviews(movieId));
-  }, [movieId, reviews]);
+    dispatch(fetchMovie(imdbId));
+    dispatch(fetchReviews(imdbId));
+  }, [reviews]);
 
   const addReview = async (e) => {
     e.preventDefault();
     const review = reviewText.current;
-
-    dispatch(createReview(review.value, movieId));
+    const reviewBody = review.value;
+    dispatch(createReview({ reviewBody, imdbId }));
 
     review.value = "";
   };
