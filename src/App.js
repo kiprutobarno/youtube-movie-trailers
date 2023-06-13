@@ -1,22 +1,14 @@
 import "./App.css";
-import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/home/Home";
 import Reviews from "./components/reviews/Reviews";
 import Trailer from "./components/trailer/Trailer";
-import { useDispatch, useSelector } from "react-redux";
 
-import { fetchMovies } from "./redux/redux-toolkit/asyncThunks";
+import { useGetMoviesQuery } from "./redux/rtq/services/moviesApi";
 
 const App = () => {
-  const { movies } = useSelector((state) => state.movies);
-
-  const disptach = useDispatch();
-
-  useEffect(() => {
-    disptach(fetchMovies());
-  }, []);
+  const { data: movies = [] } = useGetMoviesQuery();
 
   return (
     <div className="App">

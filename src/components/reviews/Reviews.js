@@ -1,38 +1,26 @@
-import { useEffect, useMemo, useRef } from "react";
+import { useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import ReviewForm from "../forms/ReviewForm";
-import { useDispatch, useSelector } from "react-redux";
 
 import {
-  fetchMovie,
-  createReview,
-} from "../../redux/redux-toolkit/asyncThunks";
+  useCreateReviewMutation,
+  useGetMovieQuery,
+} from "../../redux/rtq/services/moviesApi";
 
 const Reviews = () => {
-  const { movie } = useSelector((state) => state.movie);
-
-  //Memoize dependency to prevent ultimate loop
-  const memoizedMovie = useMemo(() => {
-    return movie;
-  });
-
-  const dispatch = useDispatch();
-
   const reviewText = useRef();
-
   let params = useParams();
   const imdbId = params.id;
 
-  useEffect(() => {
-    dispatch(fetchMovie(imdbId));
-  }, [memoizedMovie]);
+  const { data: movie = [] } = useGetMovieQuery(imdbId);
+  const [createReview] = useCreateReviewMutation();
 
   const addReview = async (e) => {
     e.preventDefault();
     const review = reviewText.current;
     const reviewBody = review.value;
-    dispatch(createReview({ reviewBody, imdbId }));
+    createReview({ reviewBody, imdbId });
 
     review.value = "";
   };
