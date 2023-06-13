@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
 import ReviewForm from "../forms/ReviewForm";
@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {
   fetchMovie,
-  fetchReviews,
   createReview,
 } from "../../redux/redux-toolkit/asyncThunks";
 
 const Reviews = () => {
   const { movie } = useSelector((state) => state.movie);
-  const { reviews } = useSelector((state) => state.reviews);
+
+  //Memoize dependency to prevent ultimate loop
+  const memoizedMovie = useMemo(() => {
+    return movie;
+  });
 
   const dispatch = useDispatch();
 
@@ -23,8 +26,7 @@ const Reviews = () => {
 
   useEffect(() => {
     dispatch(fetchMovie(imdbId));
-    dispatch(fetchReviews(imdbId));
-  }, [reviews]);
+  }, [memoizedMovie]);
 
   const addReview = async (e) => {
     e.preventDefault();
@@ -60,7 +62,7 @@ const Reviews = () => {
               </Row>
             </>
           }
-          {reviews?.map((item, index) => {
+          {movie.reviews?.map((item, index) => {
             return (
               <div key={index}>
                 <Row>

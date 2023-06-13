@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { createReview, fetchReviews } from "./asyncThunks";
+import { createReview } from "./asyncThunks";
 
 const initialState = {
   isLoading: false,
@@ -21,20 +21,6 @@ const reviewsSlice = createSlice({
     });
 
     builder.addCase(createReview.rejected, (state, action) => {
-      state.isLoading = false;
-      state.reviews = action.error.message;
-    });
-
-    builder.addCase(fetchReviews.pending, (state) => {
-      state.isLoading = true;
-    });
-
-    builder.addCase(fetchReviews.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.reviews = action.payload;
-    });
-
-    builder.addCase(fetchReviews.rejected, (state, action) => {
       state.isLoading = false;
       state.reviews = action.error.message;
     });

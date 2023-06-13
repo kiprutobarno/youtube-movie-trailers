@@ -15,20 +15,10 @@ export const createReview = createAsyncThunk(
   "reviews/addReview",
   async ({ reviewBody, imdbId }) => {
     try {
-      const res = await api.post("/api/v1/reviews", { reviewBody, imdbId });
+      await api.post("/api/v1/reviews", { reviewBody, imdbId });
       return { reviewBody, imdbId };
     } catch (error) {
       console.log(error);
     }
-  }
-);
-
-export const fetchReviews = createAsyncThunk(
-  "reviews/fetchReviews",
-  async (id) => {
-    const {
-      data: { reviews },
-    } = await api.get(`/api/v1/movies/${id}`);
-    return reviews;
   }
 );
