@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const moviesApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080" }),
-
+  tagTypes: ["Movies"],
   endpoints: (builder) => ({
     getMovies: builder.query({
       query: () => `/api/v1/movies`,
