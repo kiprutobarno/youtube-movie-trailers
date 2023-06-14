@@ -19,14 +19,22 @@ the project is created using:
 ## Setup
 To run this project, install it locally by cloning it from github:
 1. Clone the repository.
-`$ git clone https://github.com/ywalakamar/youtube-movie-trailers.git`
-`$ cd ../youtube-movie-trailers`
+
+```
+$ git clone https://github.com/ywalakamar/youtube-movie-trailers.git
+$ cd ../youtube-movie-trailers
+```
 2. Setup `ENV VARIABLES` using the template provided at `.env.example` file located at `src/main/resources` folder.
 3. Run the backend server
-`$ ./mvnw spring-boot:run`
+```
+$ ./mvnw spring-boot:run
+```
 4. Run the frontend server
-`$ cd ../client`
-`$ npm install`
-`$ npm start`
+
+```
+$ cd ../client
+$ npm install
+$ npm start
+```
 
 The client application will be automatically served via `http://localhost:3000`
